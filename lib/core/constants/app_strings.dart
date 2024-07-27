@@ -4,6 +4,8 @@ class AppStrings {
   // Genel Metinler
   static const String appName = "ToDo App";
   static const String todo = "ToDo";
+  static const String dontHaveAccount = "Hesabınız yok mu?";
+  static const String haveAccount = "Hesabınız var mı?";
 
   // Görevler ile ilgili metinler
   static const String addTodo = "Todo Ekle";
@@ -25,4 +27,21 @@ class AppStrings {
   // Tablar İle İlgili Metinler
   static const String completedTodos = "Tamamlanmış";
   static const String notCompletedTodos = "Tamamlanmamış";
+
+  // Validation İle İlgili Metinler //
+
+  // İsim
+  static const String nameRequired = "İsim alanı boş bırakılamaz";
+  // Soyisim
+  static const String lastNameRequired = "Soyisim alanı boş bırakılamaz";
+
+  // E-posta
+  static const String emailRequired = "E-Posta alanı boş bırakılamaz";
+  static const String validEmail = "Geçerli bir e-posta adresi giriniz";
+
+  // Şifre
+  static const String passwordRequired = "Şifre alanı boş bırakılamaz";
+
+  static const String passwordMinCharacter =
+      "Şifreniz en az 8 karakter olmalıdır";
 }

@@ -1,55 +1,62 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../config/routes/app_pages.dart';
 import '../../../core/constants/app_strings.dart';
 import '../../../viewmodel/auth_controller.dart';
+import '../../atoms/app_icon.dart';
+import '../../molecules/auth/login_form.dart';
+import '../../organism/login_Card.dart';
 
 class LoginPage extends GetView<AuthController> {
+  LoginPage({super.key});
+
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-
-  LoginPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text(AppStrings.login)),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            TextField(
-              controller: emailController,
-              decoration:
-                  const InputDecoration(labelText: AppStrings.email),
+      appBar: AppBar(
+        title: const Text(AppStrings.login),
+        centerTitle: true,
+        backgroundColor: Colors.blueAccent,
+      ),
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          return SingleChildScrollView(
+            child: ConstrainedBox(
+              constraints: BoxConstraints(
+                minHeight: constraints.maxHeight,
+                maxWidth: 400,
+              ),
+              child: IntrinsicHeight(
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const AppIcon(),
+                      const SizedBox(height: 32),
+                      LoginCard(
+                        loginForm: LoginForm(
+                          emailController: emailController,
+                          passwordController: passwordController,
+                          onLogin: () {
+                            controller.signIn(
+                              emailController.text,
+                              passwordController.text,
+                            );
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             ),
-            const SizedBox(height: 16),
-            TextField(
-              controller: passwordController,
-              decoration:
-                  const InputDecoration(labelText: AppStrings.password),
-              obscureText: true,
-            ),
-            const SizedBox(height: 24),
-            ElevatedButton(
-              onPressed: () {
-                controller.signIn(
-                    emailController.text, passwordController.text);
-              },
-              child: const Text(AppStrings.login),
-            ),
-            TextButton(
-              onPressed: () => Get.toNamed(Routes.REGISTER),
-              child: const Text(AppStrings.register),
-            ),
-          ],
-        ),
+          );
+        },
       ),
     );
   }
 }
-
-
-//! Firebase Çalışıyor. Griş yapa kısmı sıkıntılı
