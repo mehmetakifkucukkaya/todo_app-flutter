@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../core/constants/app_strings.dart';
-import '../../../viewmodel/auth_controller.dart';
+import '../../../controllers/auth_controller.dart';
 import '../../molecules/auth/register_form.dart';
 
 class RegisterPage extends GetView<AuthController> {

@@ -8,10 +8,11 @@ class AppStrings {
   static const String haveAccount = "Hesabınız var mı?";
 
   // Görevler ile ilgili metinler
-  static const String addTodo = "Todo Ekle";
-  static const String deleteTodo = "Todo Sil";
-  static const String updateTodo = "Todo Güncelle";
-  static const String completeTodo = "Todo'yu Tamamla";
+  static const String addTodo = "Görev Ekle";
+  static const String deleteTodo = "Görev Sil";
+  static const String updateTodo = "Görev Güncelle";
+  static const String completeTodo = "Görev'i Tamamla";
+  static const String notTodoYet = "Henüz Eklenmiş Görev Yok!";
 
   // Login İle ilgili metinler
   static const String login = "Giriş Yap";

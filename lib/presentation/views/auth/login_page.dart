@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../core/constants/app_strings.dart';
-import '../../../viewmodel/auth_controller.dart';
+import '../../../controllers/auth_controller.dart';
 import '../../atoms/app_icon.dart';
 import '../../molecules/auth/login_form.dart';
 import '../../organism/login_Card.dart';

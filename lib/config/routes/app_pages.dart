@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:todo_app/presentation/views/auth/register_page.dart';
 
 import '../../bindings/auth_binding.dart';
+import '../../bindings/todo_bindings.dart';
 import '../../presentation/views/auth/login_page.dart';
 import '../../presentation/views/home_page.dart';
 
@@ -23,8 +24,8 @@ class AppPages {
     ),
     GetPage(
       name: Routes.HOME,
-      page: () => const HomePage(),
-      // binding: TodoBinding(),
+      page: () => HomePage(),
+      binding: TodoBinding(),
     ),
   ];
 }
