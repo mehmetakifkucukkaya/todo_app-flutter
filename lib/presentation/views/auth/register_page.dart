@@ -3,47 +3,79 @@ import 'package:get/get.dart';
 
 import '../../../core/constants/app_strings.dart';
 import '../../../viewmodel/auth_controller.dart';
+import '../../molecules/auth/register_form.dart';
 
 class RegisterPage extends GetView<AuthController> {
+  RegisterPage({super.key});
+
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  final TextEditingController confirmPasswordController =
+  final TextEditingController firstNameController =
       TextEditingController();
+  final TextEditingController lastNameController = TextEditingController();
 
-  RegisterPage({super.key});
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text(AppStrings.register)),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            TextField(
-              controller: emailController,
-              decoration:
-                  const InputDecoration(labelText: AppStrings.email),
+      appBar: AppBar(
+        title: const Text(AppStrings.register),
+        centerTitle: true,
+        backgroundColor: Colors.blueAccent,
+      ),
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          return SingleChildScrollView(
+            child: ConstrainedBox(
+              constraints:
+                  BoxConstraints(minHeight: constraints.maxHeight),
+              child: IntrinsicHeight(
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        "assets/images/icon.png",
+                        height: constraints.maxHeight * 0.2,
+                        width: constraints.maxWidth * 0.4,
+                      ),
+                      const SizedBox(height: 18),
+                      Card(
+                        color: Colors.white,
+                        elevation: 8.0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: RegisterForm(
+                            formKey: _formKey,
+                            emailController: emailController,
+                            passwordController: passwordController,
+                            firstNameController: firstNameController,
+                            lastNameController: lastNameController,
+                            onRegister: () {
+                              if (_formKey.currentState!.validate()) {
+                                controller.register(
+                                  emailController.text,
+                                  passwordController.text,
+                                  firstNameController.text,
+                                  lastNameController.text,
+                                );
+                              }
+                            },
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             ),
-            const SizedBox(height: 16),
-            TextField(
-              controller: passwordController,
-              decoration:
-                  const InputDecoration(labelText: AppStrings.password),
-              obscureText: true,
-            ),
-            const SizedBox(height: 16),
-            const SizedBox(height: 24),
-            ElevatedButton(
-              onPressed: () {
-                controller.register(
-                    emailController.text, passwordController.text);
-              },
-              child: const Text(AppStrings.register),
-            ),
-          ],
-        ),
+          );
+        },
       ),
     );
   }

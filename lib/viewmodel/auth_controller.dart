@@ -25,12 +25,14 @@ class AuthController extends GetxController {
     }
   }
 
-  Future<void> register(String email, String password) async {
-    try {
-      await _authService.register(email, password);
-      Get.offAllNamed(Routes.HOME);
-    } catch (e) {
-      Get.snackbar('Error', e.toString());
+  Future<void> register(String email, String password, String firstName,
+      String lastName) async {
+    User? user =
+        await _authService.register(email, password, firstName, lastName);
+    if (user != null) {
+      Get.offAllNamed('/login');
+    } else {
+      Get.snackbar('Error', 'Registration failed');
     }
   }
 
