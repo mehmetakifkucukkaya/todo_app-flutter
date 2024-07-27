@@ -7,12 +7,24 @@ import '../data/services/auth_service.dart';
 class AuthController extends GetxController {
   final AuthService _authService = AuthService();
 
-  Rx<User?> user = Rx<User?>(null);
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  Rx<User?> firebaseUser = Rx<User?>(null);
 
   @override
   void onInit() {
-    user.bindStream(FirebaseAuth.instance.authStateChanges());
     super.onInit();
+    firebaseUser.bindStream(_auth.authStateChanges());
+    ever(firebaseUser, _setInitialScreen);
+  }
+
+  String? get userId => firebaseUser.value?.uid;
+
+  void _setInitialScreen(User? user) {
+    if (user == null) {
+      print('No user logged in');
+    } else {
+      print('User logged in: ${user.uid}');
+    }
   }
 
   Future<void> signIn(String email, String password) async {
