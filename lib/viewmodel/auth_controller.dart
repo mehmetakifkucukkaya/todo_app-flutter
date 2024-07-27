@@ -19,6 +19,7 @@ class AuthController extends GetxController {
     try {
       await _authService.signIn(email, password);
       Get.offAllNamed(Routes.HOME);
+      print('User signed in');
     } catch (e) {
       Get.snackbar('Error', e.toString());
     }
