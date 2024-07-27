@@ -1,4 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart'; // Firebase Cloud Firestore yerine doğru paket adı
+import 'package:firebase_cloud_firestore/firebase_cloud_firestore.dart';
 
 class TodoModel {
   String? id;
@@ -6,7 +6,7 @@ class TodoModel {
   bool isCompleted;
   DateTime createdAt;
   String userId;
-  String todo; // Yeni eklenen todo özelliği
+  String todo;
 
   TodoModel({
     this.id,
@@ -14,7 +14,7 @@ class TodoModel {
     this.isCompleted = false,
     required this.userId,
     DateTime? createdAt,
-    this.todo = '', // Yeni özelliğin varsayılan değeri
+    this.todo = '',
   }) : createdAt = createdAt ?? DateTime.now();
 
   // Firestore'dan veri okumak için factory constructor
@@ -26,7 +26,7 @@ class TodoModel {
       isCompleted: data['isCompleted'] ?? false,
       userId: data['userId'] ?? '',
       createdAt: (data['createdAt'] as Timestamp).toDate(),
-      todo: data['todo'] ?? '', // Yeni özelliğin okunması
+      todo: data['todo'] ?? '',
     );
   }
 
@@ -37,7 +37,7 @@ class TodoModel {
       'isCompleted': isCompleted,
       'userId': userId,
       'createdAt': Timestamp.fromDate(createdAt),
-      'todo': todo, // Yeni özelliğin eklenmesi
+      'todo': todo,
     };
   }
 
@@ -56,7 +56,7 @@ class TodoModel {
       isCompleted: isCompleted ?? this.isCompleted,
       userId: userId ?? this.userId,
       createdAt: createdAt ?? this.createdAt,
-      todo: todo ?? this.todo, // Yeni özelliğin güncellenmesi
+      todo: todo ?? this.todo,
     );
   }
 }

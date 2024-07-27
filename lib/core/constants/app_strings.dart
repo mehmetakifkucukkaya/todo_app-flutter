@@ -45,4 +45,14 @@ class AppStrings {
 
   static const String passwordMinCharacter =
       "Şifreniz en az 8 karakter olmalıdır";
+
+  // Görev ekleme ile ilgili //
+
+  static const String title = "Başlık";
+  static const String todoAdd = "Görevi giriniz";
+  static const String pageTitle = "Görev ekle";
+
+  // Butonlar
+  static const String cancel = "İptal";
+  static const String add = "Ekle";
 }

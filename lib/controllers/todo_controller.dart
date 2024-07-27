@@ -1,14 +1,15 @@
-import 'package:cloud_firestore/cloud_firestore.dart'; // Firebase Cloud Firestore yerine doğru paket adı
 import 'package:get/get.dart';
 
 import '../data/models/todo_model.dart';
+import '../data/services/todo_service.dart';
 import 'auth_controller.dart';
 
 class TodoController extends GetxController {
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final TodoService _todoService = TodoService();
   final AuthController _authController = Get.find<AuthController>();
 
   final todos = <TodoModel>[].obs;
+  final isLoading = false.obs;
 
   @override
   void onInit() {
@@ -17,89 +18,56 @@ class TodoController extends GetxController {
     fetchTodos();
   }
 
-  //* Todoları Firebase'den getirme metodu
   List<TodoModel> get incompleteTodos =>
       todos.where((todo) => !todo.isCompleted).toList();
 
   List<TodoModel> get completedTodos =>
       todos.where((todo) => todo.isCompleted).toList();
 
-  //* Todoları firebase'den çekme metodu
+//* görevleri veritabanından çeken metot
   Future<void> fetchTodos() async {
     if (_authController.userId == null) {
       print('User ID is null');
       return;
     }
 
+    isLoading.value = true;
+
     try {
-      print('Fetching todos for user: ${_authController.userId}');
-      final querySnapshot = await _firestore
-          .collection('users')
-          .doc(_authController.userId)
-          .collection('todos')
-          .get();
-
-      print('Query snapshot: ${querySnapshot.docs.length} documents');
-
-      if (querySnapshot.docs.isEmpty) {
-        print('No todos found for user: ${_authController.userId}');
-      } else {
-        todos.value = querySnapshot.docs
-            .map((doc) => TodoModel.fromFirestore(doc))
-            .toList();
-        print("Fetched todos: ${todos.length}");
-        for (var todo in todos) {
-          print('Todo: ${todo.title}, Completed: ${todo.isCompleted}');
-        }
-      }
-    } catch (e) {
-      print('Failed to fetch todos: $e');
+      final fetchedTodos =
+          await _todoService.fetchTodos(_authController.userId!);
+      todos.value = fetchedTodos;
+    } finally {
+      isLoading.value = false;
     }
   }
 
+//* Yeni görev eklemek için kullanılan metot
   Future<void> addTodo(String title, String todo) async {
     if (_authController.userId == null) return;
 
     final newTodo = TodoModel(
       title: title,
       userId: _authController.userId!,
-      todo: todo, // Yeni özellik ekleniyor
+      todo: todo,
+      isCompleted: false,
+      createdAt: DateTime.now(),
     );
 
-    try {
-      final docRef = await _firestore
-          .collection('users')
-          .doc(_authController.userId)
-          .collection('todos')
-          .add(newTodo.toMap());
-      newTodo.id = docRef.id;
-      todos.add(newTodo);
-      print("Added todo: ${newTodo.title}");
-    } catch (e) {
-      print('Failed to add todo: $e');
-    }
+    await _todoService.addTodo(_authController.userId!, newTodo);
+    todos.add(newTodo);
   }
 
-  //* Todo'yu tamamlayıp tamamalamama durumunu kontrol eden metot
+//* Tamamlanıp tamamlanmama durumunu yöneten metod
   Future<void> toggleTodo(TodoModel todo) async {
     if (_authController.userId == null) return;
 
     final updatedTodo = todo.copyWith(isCompleted: !todo.isCompleted);
 
-    try {
-      await _firestore
-          .collection('users')
-          .doc(_authController.userId)
-          .collection('todos')
-          .doc(todo.id)
-          .update(updatedTodo.toMap());
-      final index = todos.indexWhere((t) => t.id == todo.id);
-      if (index != -1) {
-        todos[index] = updatedTodo;
-      }
-      print("Toggled todo: ${updatedTodo.title}");
-    } catch (e) {
-      print('Failed to toggle todo: $e');
+    await _todoService.updateTodo(_authController.userId!, updatedTodo);
+    final index = todos.indexWhere((t) => t.id == todo.id);
+    if (index != -1) {
+      todos[index] = updatedTodo;
     }
   }
 }

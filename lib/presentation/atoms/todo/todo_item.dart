@@ -30,10 +30,15 @@ class TodoItem extends StatelessWidget {
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(todo.todo),
+            Text(
+              todo.todo,
+              style: const TextStyle(
+                fontSize: 16,
+              ),
+            ),
             const SizedBox(height: 8),
             Text(
-              'Created on: ${todo.createdAt.toLocal().toString().split(' ')[0]}',
+              todo.createdAt.toLocal().toString().split(' ')[0],
               style: TextStyle(
                 color: Colors.grey[600],
                 fontStyle: FontStyle.italic,
