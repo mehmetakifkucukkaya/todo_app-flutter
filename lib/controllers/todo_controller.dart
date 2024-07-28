@@ -11,6 +11,9 @@ class TodoController extends GetxController {
   final todos = <TodoModel>[].obs;
   final isLoading = false.obs;
 
+  //* Search işlemi için
+  final searchQuery = ''.obs;
+
   @override
   void onInit() {
     super.onInit();
@@ -18,11 +21,16 @@ class TodoController extends GetxController {
     fetchTodos();
   }
 
-  List<TodoModel> get incompleteTodos =>
-      todos.where((todo) => !todo.isCompleted).toList();
+//* Arama işlemi için listelere ayırıyoruz
+  List<TodoModel> get incompleteTodos => todos
+      .where((todo) =>
+          !todo.isCompleted && todo.title.contains(searchQuery.value))
+      .toList();
 
-  List<TodoModel> get completedTodos =>
-      todos.where((todo) => todo.isCompleted).toList();
+  List<TodoModel> get completedTodos => todos
+      .where((todo) =>
+          todo.isCompleted && todo.title.contains(searchQuery.value))
+      .toList();
 
   Future<void> fetchTodos() async {
     if (_authController.userId == null) {
@@ -53,7 +61,8 @@ class TodoController extends GetxController {
     );
 
     await _todoService.addTodo(_authController.userId!, newTodo);
-    fetchTodos(); 
+    todos.add(newTodo);
+    fetchTodos();
   }
 
   Future<void> toggleTodo(TodoModel todo) async {
