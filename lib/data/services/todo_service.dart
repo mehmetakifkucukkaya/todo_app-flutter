@@ -47,6 +47,21 @@ class TodoService {
           .update(todo.toMap());
     } catch (e) {
       print('Failed to update todo: $e');
+      rethrow;
+    }
+  }
+
+  Future<void> deleteTodo(String userId, String todoId) async {
+    try {
+      await _firestore
+          .collection('users')
+          .doc(userId)
+          .collection('todos')
+          .doc(todoId)
+          .delete();
+    } catch (e) {
+      print('Failed to delete todo: $e');
+      rethrow;
     }
   }
 }

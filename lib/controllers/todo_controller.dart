@@ -24,7 +24,7 @@ class TodoController extends GetxController {
   List<TodoModel> get completedTodos =>
       todos.where((todo) => todo.isCompleted).toList();
 
-//* görevleri veritabanından çeken metot
+  //* görevleri veritabanından çeken metot
   Future<void> fetchTodos() async {
     if (_authController.userId == null) {
       print('User ID is null');
@@ -42,7 +42,7 @@ class TodoController extends GetxController {
     }
   }
 
-//* Yeni görev eklemek için kullanılan metot
+  //* Yeni görev eklemek için kullanılan metot
   Future<void> addTodo(String title, String todo) async {
     if (_authController.userId == null) return;
 
@@ -58,7 +58,7 @@ class TodoController extends GetxController {
     todos.add(newTodo);
   }
 
-//* Tamamlanıp tamamlanmama durumunu yöneten metod
+  //* Tamamlanıp tamamlanmama durumunu yöneten metod
   Future<void> toggleTodo(TodoModel todo) async {
     if (_authController.userId == null) return;
 
@@ -68,6 +68,35 @@ class TodoController extends GetxController {
     final index = todos.indexWhere((t) => t.id == todo.id);
     if (index != -1) {
       todos[index] = updatedTodo;
+    }
+  }
+
+  //* Görev güncelleme metodu
+  Future<void> updateTodo(TodoModel updatedTodo) async {
+    if (_authController.userId == null) return;
+
+    try {
+      await _todoService.updateTodo(_authController.userId!, updatedTodo);
+      final index = todos.indexWhere((t) => t.id == updatedTodo.id);
+      if (index != -1) {
+        todos[index] = updatedTodo;
+      }
+    } catch (e) {
+      print('Failed to update todo: $e');
+      rethrow;
+    }
+  }
+
+  //* Görev silme metodu
+  Future<void> deleteTodo(String todoId) async {
+    if (_authController.userId == null) return;
+
+    try {
+      await _todoService.deleteTodo(_authController.userId!, todoId);
+      todos.removeWhere((todo) => todo.id == todoId);
+    } catch (e) {
+      print('Failed to delete todo: $e');
+      rethrow;
     }
   }
 }

@@ -94,23 +94,23 @@ class HomePage extends StatelessWidget {
                   );
                   Navigator.pop(context);
                   Get.snackbar(
-                    "Tamamlandı",
-                    "Göreviniz Başarıyla Eklendi",
+                    AppStrings.success,
+                    AppStrings.addSuccesDesc,
                     backgroundColor: Colors.green,
                     icon: const Icon(Icons.check_circle),
                   );
                 } catch (e) {
                   print('Failed to add todo: $e');
                   Get.snackbar(
-                    "Hata",
-                    "Göreviniz Eklenemedi: ${e.toString()}",
+                    AppStrings.error,
+                    "${AppStrings.addErrorDesc} ${e.toString()}",
                     backgroundColor: Colors.red,
                     icon: const Icon(Icons.error),
                   );
                 }
               } else {
                 Get.snackbar(
-                  "Hata",
+                  AppStrings.error,
                   "Başlık ve açıklama boş olamaz",
                   backgroundColor: Colors.red,
                   icon: const Icon(Icons.error),

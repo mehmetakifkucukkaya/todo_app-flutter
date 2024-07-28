@@ -55,4 +55,14 @@ class AppStrings {
   // Butonlar
   static const String cancel = "İptal";
   static const String add = "Ekle";
+
+  // SnackBar Mesajları //
+
+  //Silme
+  static const String success = "Tamamlandı";
+  static const String deletSuccesDesc = "Görev Başarıyla Silindi";
+  static const String addSuccesDesc = "Görev Başarıyla Silindi";
+  static const String error = "Hata";
+  static const String deleteErrorDesc = "Görev Silinemedi";
+  static const String addErrorDesc = "Görev Silinemedi";
 }
