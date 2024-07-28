@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
+import 'package:todo_app/config/themes/app_theme.dart';
 import 'package:todo_app/controllers/todo_controller.dart';
 import 'package:todo_app/core/constants/app_strings.dart';
 
@@ -70,7 +72,10 @@ class TodoItem extends StatelessWidget {
         }
       },
       child: Card(
-        elevation: 4,
+        color: todo.isCompleted
+            ? AppTheme.completedTodoCard
+            : AppTheme.notCompletedTodoCard,
+        elevation: 6,
         margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
         child: ListTile(
           contentPadding: const EdgeInsets.all(16),
@@ -93,7 +98,7 @@ class TodoItem extends StatelessWidget {
               ),
               const SizedBox(height: 8),
               Text(
-                todo.createdAt.toLocal().toString().split(' ')[0],
+                _formatDate(todo.createdAt),
                 style: TextStyle(
                   color: Colors.grey[600],
                   fontStyle: FontStyle.italic,
@@ -205,5 +210,10 @@ class TodoItem extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  String _formatDate(DateTime date) {
+    final DateFormat formatter = DateFormat('d MMMM yyyy - HH:mm');
+    return formatter.format(date);
   }
 }

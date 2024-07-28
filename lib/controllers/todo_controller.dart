@@ -24,7 +24,6 @@ class TodoController extends GetxController {
   List<TodoModel> get completedTodos =>
       todos.where((todo) => todo.isCompleted).toList();
 
-  //* görevleri veritabanından çeken metot
   Future<void> fetchTodos() async {
     if (_authController.userId == null) {
       print('User ID is null');
@@ -42,7 +41,6 @@ class TodoController extends GetxController {
     }
   }
 
-  //* Yeni görev eklemek için kullanılan metot
   Future<void> addTodo(String title, String todo) async {
     if (_authController.userId == null) return;
 
@@ -55,10 +53,9 @@ class TodoController extends GetxController {
     );
 
     await _todoService.addTodo(_authController.userId!, newTodo);
-    todos.add(newTodo);
+    fetchTodos(); 
   }
 
-  //* Tamamlanıp tamamlanmama durumunu yöneten metod
   Future<void> toggleTodo(TodoModel todo) async {
     if (_authController.userId == null) return;
 
@@ -71,7 +68,6 @@ class TodoController extends GetxController {
     }
   }
 
-  //* Görev güncelleme metodu
   Future<void> updateTodo(TodoModel updatedTodo) async {
     if (_authController.userId == null) return;
 
@@ -87,7 +83,6 @@ class TodoController extends GetxController {
     }
   }
 
-  //* Görev silme metodu
   Future<void> deleteTodo(String todoId) async {
     if (_authController.userId == null) return;
 

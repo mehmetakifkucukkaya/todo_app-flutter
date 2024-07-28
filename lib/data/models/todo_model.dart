@@ -9,10 +9,10 @@ class TodoModel {
   String todo;
 
   TodoModel({
+    required this.userId,
     this.id,
     required this.title,
     this.isCompleted = false,
-    required this.userId,
     DateTime? createdAt,
     this.todo = '',
   }) : createdAt = createdAt ?? DateTime.now();
