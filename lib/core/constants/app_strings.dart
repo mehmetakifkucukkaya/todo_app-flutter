@@ -58,11 +58,18 @@ class AppStrings {
 
   // SnackBar Mesajları //
 
-  //Silme
   static const String success = "Tamamlandı";
-  static const String deletSuccesDesc = "Görev Başarıyla Silindi";
-  static const String addSuccesDesc = "Görev Başarıyla Silindi";
   static const String error = "Hata";
+  //Silme
+  static const String deletSuccesDesc = "Görev Başarıyla Silindi";
   static const String deleteErrorDesc = "Görev Silinemedi";
-  static const String addErrorDesc = "Görev Silinemedi";
+
+  //Ekleme
+  static const String addSuccesDesc = "Görev Başarıyla Eklendi";
+  static const String addErrorDesc = "Görev Eklenemedi";
+
+  //Güncelleme
+  static const String updateSuccesDesc = "Görev Başarıyla Güncellendi";
+  static const String updateErrorDesc = "Görev Güncellenemedi";
+  static const String updateWarning = "Başlık ve açıklama boş olamaz";
 }

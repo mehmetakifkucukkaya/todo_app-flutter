@@ -20,32 +20,53 @@ class TodoItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Dismissible(
       key: UniqueKey(),
+      //* Güncelleme
       background: Container(
+        color: Colors.green,
+        alignment: Alignment.centerLeft,
+        padding: const EdgeInsets.only(left: 20),
+        child: const Icon(
+          Icons.edit,
+          color: Colors.white,
+          size: 30,
+        ),
+      ),
+      //* Silme
+      secondaryBackground: Container(
         color: Colors.red,
         alignment: Alignment.centerRight,
         padding: const EdgeInsets.only(right: 20),
-        child: const Icon(Icons.delete, color: Colors.white),
+        child: const Icon(Icons.delete, color: Colors.white, size: 30),
       ),
-      direction: DismissDirection.endToStart,
       confirmDismiss: (direction) async {
-        return await _showConfirmationDialog(context);
+        if (direction == DismissDirection.endToStart) {
+          return await _showConfirmationDialog(context);
+        } else if (direction == DismissDirection.startToEnd) {
+          _showUpdateTodoDialog(context, todo);
+          return false;
+        }
+        return false;
       },
       onDismissed: (direction) async {
-        try {
-          await controller.deleteTodo(todo.id.toString());
-          Get.snackbar(
-            AppStrings.success,
-            AppStrings.deletSuccesDesc,
-            backgroundColor: Colors.green,
-            icon: const Icon(Icons.check_circle),
-          );
-        } catch (e) {
-          Get.snackbar(
-            AppStrings.error,
-            "${AppStrings.deleteErrorDesc} ${e.toString()}",
-            backgroundColor: Colors.red,
-            icon: const Icon(Icons.error),
-          );
+        if (direction == DismissDirection.endToStart) {
+          try {
+            await controller.deleteTodo(todo.id.toString());
+            Get.snackbar(
+              AppStrings.success,
+              AppStrings.deletSuccesDesc,
+              backgroundColor: Colors.green,
+              icon: const Icon(
+                Icons.check_circle,
+              ),
+            );
+          } catch (e) {
+            Get.snackbar(
+              AppStrings.error,
+              "${AppStrings.deleteErrorDesc} ${e.toString()}",
+              backgroundColor: Colors.red,
+              icon: const Icon(Icons.error),
+            );
+          }
         }
       },
       child: Card(
@@ -113,6 +134,76 @@ class TodoItem extends StatelessWidget {
           ],
         );
       },
+    );
+  }
+
+  void _showUpdateTodoDialog(BuildContext context, TodoModel todo) {
+    final TextEditingController titleController =
+        TextEditingController(text: todo.title);
+    final TextEditingController todoController =
+        TextEditingController(text: todo.todo);
+
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Görev Güncelle'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            TextField(
+              controller: titleController,
+              decoration: const InputDecoration(hintText: 'Başlık'),
+            ),
+            TextField(
+              controller: todoController,
+              decoration: const InputDecoration(hintText: 'Görev'),
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('İptal'),
+          ),
+          TextButton(
+            onPressed: () async {
+              if (titleController.text.isNotEmpty &&
+                  todoController.text.isNotEmpty) {
+                try {
+                  todo.title = titleController.text;
+                  todo.todo = todoController.text;
+                  await controller.updateTodo(
+                    todo,
+                  );
+                  Navigator.pop(context);
+                  Get.snackbar(
+                    AppStrings.success,
+                    AppStrings.updateSuccesDesc,
+                    backgroundColor: Colors.green,
+                    icon: const Icon(Icons.check_circle),
+                  );
+                } catch (e) {
+                  print('Failed to update todo: $e');
+                  Get.snackbar(
+                    AppStrings.error,
+                    "Göreviniz Güncellenemedi: ${e.toString()}",
+                    backgroundColor: Colors.red,
+                    icon: const Icon(Icons.error),
+                  );
+                }
+              } else {
+                Get.snackbar(
+                  AppStrings.error,
+                  AppStrings.updateWarning,
+                  backgroundColor: Colors.red,
+                  icon: const Icon(Icons.error),
+                );
+              }
+            },
+            child: const Text('Güncelle'),
+          ),
+        ],
+      ),
     );
   }
 }
