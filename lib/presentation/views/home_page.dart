@@ -14,8 +14,21 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Todo App'),
+        title: const Text(AppStrings.appName),
         centerTitle: true,
+        bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(kToolbarHeight),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: SearchBar(
+              onChanged: (value) {
+                controller.searchQuery.value = value;
+              },
+              hintText: 'Search Todos',
+              leading: const Icon(Icons.search),
+            ),
+          ),
+        ),
       ),
       body: Obx(
         () {
@@ -37,8 +50,10 @@ class HomePage extends StatelessWidget {
                 Expanded(
                   child: TabBarView(
                     children: [
-                      tt.TodoTab(todos: controller.incompleteTodos),
-                      tt.TodoTab(todos: controller.completedTodos),
+                      Obx(() =>
+                          tt.TodoTab(todos: controller.incompleteTodos)),
+                      Obx(() =>
+                          tt.TodoTab(todos: controller.completedTodos)),
                     ],
                   ),
                 ),
@@ -54,7 +69,6 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  //* Görev Ekleme pop-up'ı
   void _showAddTodoDialog(BuildContext context) {
     final TextEditingController titleController = TextEditingController();
     final TextEditingController todoController = TextEditingController();
@@ -62,7 +76,7 @@ class HomePage extends StatelessWidget {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text(AppStrings.pageTitle),
+        title: const Text(AppStrings.addPageTitle),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
