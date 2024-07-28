@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
+import 'package:todo_app/core/constants/app_strings.dart';
 
 import '../config/routes/app_pages.dart';
 import '../data/services/auth_service.dart';
@@ -33,7 +34,7 @@ class AuthController extends GetxController {
       Get.offAllNamed(Routes.HOME);
       print('User signed in');
     } catch (e) {
-      Get.snackbar('Error', e.toString());
+      Get.snackbar(AppStrings.error, e.toString());
     }
   }
 
@@ -44,7 +45,7 @@ class AuthController extends GetxController {
     if (user != null) {
       Get.offAllNamed('/login');
     } else {
-      Get.snackbar('Error', 'Registration failed');
+      Get.snackbar(AppStrings.error, 'Registration failed');
     }
   }
 
