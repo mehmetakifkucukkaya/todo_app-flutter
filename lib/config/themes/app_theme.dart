@@ -6,4 +6,7 @@ class AppTheme {
   static const Color orange = Color(0xFFFCA01F);
   static const Color green = Color(0xFF54AA76);
   static const Color blueText = Color(0xFF223097);
+
+  static final Color completedTodoCard = Colors.green[300]!;
+  static final Color notCompletedTodoCard = Colors.red[200]!;
 }
