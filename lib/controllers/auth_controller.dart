@@ -24,7 +24,7 @@ class AuthController extends GetxController {
     if (user == null) {
       print('No user logged in');
     } else {
-      print('User logged in: ${user.uid}');
+      print('User logged in: ${user.uid} - ${user.email}');
     }
   }
 
@@ -32,7 +32,7 @@ class AuthController extends GetxController {
     try {
       await _authService.signIn(email, password);
       Get.offAllNamed(Routes.HOME);
-      print('User signed in');
+      print('User signed in ');
     } catch (e) {
       Get.snackbar(AppStrings.error, e.toString());
     }

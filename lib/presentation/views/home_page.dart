@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:todo_app/config/themes/app_theme.dart';
+import 'package:todo_app/controllers/auth_controller.dart';
 import 'package:todo_app/core/constants/app_strings.dart';
 
 import '../../controllers/todo_controller.dart' as tc;
@@ -7,6 +9,7 @@ import '../organism/todo/todo_tab.dart' as tt;
 
 class HomePage extends StatelessWidget {
   final tc.TodoController controller = Get.put(tc.TodoController());
+  final AuthController authController = Get.find<AuthController>();
 
   HomePage({super.key});
 
@@ -16,6 +19,18 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(
         title: const Text(AppStrings.appName),
         centerTitle: true,
+        actions: [
+          IconButton(
+            icon: const Icon(
+              Icons.exit_to_app,
+              color: AppTheme.signOutColor,
+              size: 32,
+            ),
+            onPressed: () {
+              authController.signOut();
+            },
+          ),
+        ],
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(kToolbarHeight),
           child: Padding(
