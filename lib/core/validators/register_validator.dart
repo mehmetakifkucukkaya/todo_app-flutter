@@ -1,3 +1,5 @@
+// ignore_for_file: public_member_api_docs
+
 import 'package:todo_app/core/constants/app_strings.dart';
 
 // Register Form'da kullanılacak validatorleri kapsayan sınıf

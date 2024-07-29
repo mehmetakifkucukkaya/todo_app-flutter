@@ -1,11 +1,13 @@
+// ignore_for_file: public_member_api_docs
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../controllers/auth_controller.dart';
-import '../../../core/constants/app_strings.dart';
-import '../../atoms/app_icon.dart';
-import '../../molecules/auth/login_form.dart';
-import '../../organism/login_Card.dart';
+import 'package:todo_app/controllers/auth_controller.dart';
+import 'package:todo_app/core/constants/app_strings.dart';
+import 'package:todo_app/presentation/atoms/app_icon.dart';
+import 'package:todo_app/presentation/molecules/auth/login_form.dart';
+import 'package:todo_app/presentation/organism/login_Card.dart';
 
 class LoginPage extends GetView<AuthController> {
   LoginPage({super.key});
@@ -16,8 +18,8 @@ class LoginPage extends GetView<AuthController> {
   @override
   Widget build(BuildContext context) {
     //* Responsive UI için
-    final double screenWidth = MediaQuery.of(context).size.width;
-    final double screenHeight = MediaQuery.of(context).size.height;
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
       appBar: AppBar(
@@ -34,7 +36,7 @@ class LoginPage extends GetView<AuthController> {
             ),
             child: IntrinsicHeight(
               child: Padding(
-                padding: const EdgeInsets.all(16.0),
+                padding: const EdgeInsets.all(16),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [

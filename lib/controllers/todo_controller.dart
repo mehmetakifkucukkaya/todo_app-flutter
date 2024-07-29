@@ -1,8 +1,9 @@
-import 'package:get/get.dart';
+// ignore_for_file: public_member_api_docs
 
-import '../data/models/todo_model.dart';
-import '../data/services/todo_service.dart';
-import 'auth_controller.dart';
+import 'package:get/get.dart';
+import 'package:todo_app/controllers/auth_controller.dart';
+import 'package:todo_app/data/models/todo_model.dart';
+import 'package:todo_app/data/services/todo_service.dart';
 
 class TodoController extends GetxController {
   final TodoService _todoService = TodoService();
@@ -24,12 +25,12 @@ class TodoController extends GetxController {
 //* Arama işlemi için listelere ayırıyoruz
   List<TodoModel> get incompleteTodos => todos
       .where((todo) =>
-          !todo.isCompleted && todo.title.contains(searchQuery.value))
+          !todo.isCompleted && todo.title.contains(searchQuery.value),)
       .toList();
 
   List<TodoModel> get completedTodos => todos
       .where((todo) =>
-          todo.isCompleted && todo.title.contains(searchQuery.value))
+          todo.isCompleted && todo.title.contains(searchQuery.value),)
       .toList();
 
   Future<void> fetchTodos() async {

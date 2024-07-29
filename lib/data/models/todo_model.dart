@@ -1,3 +1,5 @@
+// ignore_for_file: public_member_api_docs
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -5,6 +7,23 @@ part 'todo_model.g.dart';
 
 @JsonSerializable()
 class TodoModel {
+  TodoModel({
+    required this.userId,
+    required this.title,
+    this.id,
+    this.isCompleted = false,
+    DateTime? createdAt,
+    this.todo = '',
+  }) : createdAt = createdAt ?? DateTime.now();
+
+  // Firestore'dan veri okumak için factory constructor
+  factory TodoModel.fromFirestore(DocumentSnapshot doc) {
+    final data = doc.data()! as Map<String, dynamic>;
+    return TodoModel.fromJson({...data, 'id': doc.id});
+  }
+
+  factory TodoModel.fromJson(Map<String, dynamic> json) =>
+      _$TodoModelFromJson(json);
   @JsonKey(includeIfNull: false)
   String? id;
   String title;
@@ -15,27 +34,9 @@ class TodoModel {
   String userId;
   @JsonKey(defaultValue: '')
   String todo;
-
-  TodoModel({
-    required this.userId,
-    this.id,
-    required this.title,
-    this.isCompleted = false,
-    DateTime? createdAt,
-    this.todo = '',
-  }) : createdAt = createdAt ?? DateTime.now();
-
-  factory TodoModel.fromJson(Map<String, dynamic> json) =>
-      _$TodoModelFromJson(json);
   Map<String, dynamic> toJson() => _$TodoModelToJson(this);
 
-  // Firestore'dan veri okumak için factory constructor
-  factory TodoModel.fromFirestore(DocumentSnapshot doc) {
-    final data = doc.data() as Map<String, dynamic>;
-    return TodoModel.fromJson({...data, 'id': doc.id});
-  }
-
-  // Todo'yu güncellemek için kullanılabilecek bir metod
+  // Görevi güncellemek için kullanılabilecek bir metod
   TodoModel copyWith({
     String? id,
     String? title,

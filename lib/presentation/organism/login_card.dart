@@ -1,29 +1,29 @@
+// ignore_for_file: public_member_api_docs
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:todo_app/config/routes/app_pages.dart';
 import 'package:todo_app/config/themes/app_theme.dart';
-
-import '../../config/routes/app_pages.dart';
-import '../../core/constants/app_strings.dart';
-import '../molecules/auth/login_form.dart';
+import 'package:todo_app/core/constants/app_strings.dart';
+import 'package:todo_app/presentation/molecules/auth/login_form.dart';
 
 class LoginCard extends StatelessWidget {
-  final LoginForm loginForm;
-
   const LoginCard({
-    super.key,
     required this.loginForm,
+    super.key,
   });
+  final LoginForm loginForm;
 
   @override
   Widget build(BuildContext context) {
     return Card(
       color: Colors.blueGrey[50],
-      elevation: 10.0,
+      elevation: 10,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10.0),
+        borderRadius: BorderRadius.circular(10),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -49,7 +49,7 @@ class LoginCard extends StatelessWidget {
                       color: AppTheme.blueText,
                     ),
                   ),
-                )
+                ),
               ],
             ),
           ],
