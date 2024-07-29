@@ -5,6 +5,7 @@ class LoginTextField extends StatelessWidget {
   final String labelText;
   final IconData prefixIcon;
   final bool obscureText;
+  final String? Function(String?)? validator;
 
   const LoginTextField({
     super.key,
@@ -12,11 +13,12 @@ class LoginTextField extends StatelessWidget {
     required this.labelText,
     required this.prefixIcon,
     this.obscureText = false,
+    this.validator,
   });
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return TextFormField(
       controller: controller,
       decoration: InputDecoration(
         labelText: labelText,
@@ -26,6 +28,7 @@ class LoginTextField extends StatelessWidget {
         prefixIcon: Icon(prefixIcon),
       ),
       obscureText: obscureText,
+      validator: validator,
     );
   }
 }

@@ -51,7 +51,7 @@ class AppStrings {
   static const String title = "Başlık";
   static const String todoAdd = "Görevi giriniz";
   static const String addPageTitle = "Görev ekle";
-
+ 
   // Butonlar
   static const String cancel = "İptal";
   static const String add = "Ekle";
