@@ -1,3 +1,5 @@
+// ignore_for_file: noop_primitive_operations, public_member_api_docs
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_cloud_firestore/firebase_cloud_firestore.dart';
 
@@ -7,8 +9,8 @@ class AuthService {
 
   Future<User?> signIn(String email, String password) async {
     try {
-      UserCredential result = await _auth.signInWithEmailAndPassword(
-          email: email, password: password);
+      final result = await _auth.signInWithEmailAndPassword(
+          email: email, password: password,);
       return result.user;
     } catch (e) {
       print(e.toString());
@@ -18,14 +20,14 @@ class AuthService {
 
   //* Kayıt olma metodu
   Future<User?> register(String email, String password, String firstName,
-      String lastName) async {
+      String lastName,) async {
     try {
-      UserCredential result = await _auth.createUserWithEmailAndPassword(
-          email: email, password: password);
-      User? user = result.user;
+      final result = await _auth.createUserWithEmailAndPassword(
+          email: email, password: password,);
+      final user = result.user;
 
       // Anlık tarih verisini alıp oluşturulma tarihini belirliyoruuz
-      DateTime now = DateTime.now();
+      final now = DateTime.now();
 
       // Kullanıcı bilgilerini Firestore'a kaydediyoruz
       await _firestore.collection('users').doc(user?.uid).set({

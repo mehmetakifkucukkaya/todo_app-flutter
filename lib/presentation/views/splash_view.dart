@@ -1,8 +1,9 @@
+// ignore_for_file: public_member_api_docs
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
-
-import '../../config/routes/app_pages.dart';
+import 'package:todo_app/config/routes/app_pages.dart';
 
 class SplashView extends StatefulWidget {
   const SplashView({super.key});
@@ -18,7 +19,7 @@ class SplashViewState extends State<SplashView> {
     _navigateToHome();
   }
 
-  _navigateToHome() async {
+  Future<void> _navigateToHome() async {
     await Future.delayed(const Duration(seconds: 3), () {});
     Get.offNamed(Routes.LOGIN);
   }

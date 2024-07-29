@@ -1,17 +1,13 @@
+// ignore_for_file: public_member_api_docs
+
 import 'package:flutter/material.dart';
 
-import '../../../core/constants/app_strings.dart';
-import '../../../core/validators/register_validator.dart';
-import '../../atoms/custom_button.dart';
-import '../../atoms/custom_text_field.dart';
+import 'package:todo_app/core/constants/app_strings.dart';
+import 'package:todo_app/core/validators/register_validator.dart';
+import 'package:todo_app/presentation/atoms/custom_button.dart';
+import 'package:todo_app/presentation/atoms/custom_text_field.dart';
 
 class RegisterForm extends StatelessWidget {
-  final GlobalKey<FormState> formKey;
-  final TextEditingController emailController;
-  final TextEditingController passwordController;
-  final TextEditingController firstNameController;
-  final TextEditingController lastNameController;
-  final VoidCallback onRegister;
 
   const RegisterForm({
     super.key,
@@ -22,6 +18,12 @@ class RegisterForm extends StatelessWidget {
     required this.lastNameController,
     required this.onRegister,
   });
+  final GlobalKey<FormState> formKey;
+  final TextEditingController emailController;
+  final TextEditingController passwordController;
+  final TextEditingController firstNameController;
+  final TextEditingController lastNameController;
+  final VoidCallback onRegister;
 
   @override
   Widget build(BuildContext context) {

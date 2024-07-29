@@ -1,22 +1,22 @@
+// ignore_for_file: public_member_api_docs, unnecessary_await_in_return
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:todo_app/config/themes/app_theme.dart';
 import 'package:todo_app/controllers/todo_controller.dart';
 import 'package:todo_app/core/constants/app_strings.dart';
-
-import '../../../data/models/todo_model.dart';
+import 'package:todo_app/data/models/todo_model.dart';
 
 class TodoItem extends StatelessWidget {
+  TodoItem({
+    required this.todo,
+    required this.onTap,
+    super.key,
+  });
   final TodoModel todo;
   final VoidCallback onTap;
   final TodoController controller = Get.find<TodoController>();
-
-  TodoItem({
-    super.key,
-    required this.todo,
-    required this.onTap,
-  });
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +64,7 @@ class TodoItem extends StatelessWidget {
           } catch (e) {
             Get.snackbar(
               AppStrings.error,
-              "${AppStrings.deleteErrorDesc} ${e.toString()}",
+              '${AppStrings.deleteErrorDesc} $e',
               backgroundColor: Colors.red,
               icon: const Icon(Icons.error),
             );
@@ -143,10 +143,8 @@ class TodoItem extends StatelessWidget {
   }
 
   void _showUpdateTodoDialog(BuildContext context, TodoModel todo) {
-    final TextEditingController titleController =
-        TextEditingController(text: todo.title);
-    final TextEditingController todoController =
-        TextEditingController(text: todo.todo);
+    final titleController = TextEditingController(text: todo.title);
+    final todoController = TextEditingController(text: todo.todo);
 
     showDialog(
       context: context,
@@ -191,7 +189,7 @@ class TodoItem extends StatelessWidget {
                   print('Failed to update todo: $e');
                   Get.snackbar(
                     AppStrings.error,
-                    "Göreviniz Güncellenemedi: ${e.toString()}",
+                    'Göreviniz Güncellenemedi: $e',
                     backgroundColor: Colors.red,
                     icon: const Icon(Icons.error),
                   );
@@ -213,7 +211,7 @@ class TodoItem extends StatelessWidget {
   }
 
   String _formatDate(DateTime date) {
-    final DateFormat formatter = DateFormat('d MMMM yyyy - HH:mm');
+    final formatter = DateFormat('d MMMM yyyy - HH:mm');
     return formatter.format(date);
   }
 }

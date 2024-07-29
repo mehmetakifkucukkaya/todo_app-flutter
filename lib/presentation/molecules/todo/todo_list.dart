@@ -1,11 +1,13 @@
+// ignore_for_file: public_member_api_docs
+
 import 'package:flutter/material.dart';
 
-import '../../atoms/todo/todo_item.dart';
+import 'package:todo_app/presentation/atoms/todo/todo_item.dart';
 
 class TodoList extends StatelessWidget {
-  final List<TodoItem> todos;
 
   const TodoList({super.key, required this.todos});
+  final List<TodoItem> todos;
 
   @override
   Widget build(BuildContext context) {

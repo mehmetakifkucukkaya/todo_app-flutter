@@ -1,21 +1,21 @@
+// ignore_for_file: public_member_api_docs, always_put_required_named_parameters_first
+
 import 'package:flutter/material.dart';
+import 'package:todo_app/core/constants/app_strings.dart';
+import 'package:todo_app/core/validators/register_validator.dart';
+import 'package:todo_app/presentation/atoms/custom_button.dart';
 import 'package:todo_app/presentation/atoms/textfield_login.dart';
 
-import '../../../core/constants/app_strings.dart';
-import '../../../core/validators/register_validator.dart';
-import '../../atoms/custom_button.dart';
-
 class LoginForm extends StatefulWidget {
-  final TextEditingController emailController;
-  final TextEditingController passwordController;
-  final VoidCallback onLogin;
-
   const LoginForm({
     super.key,
     required this.emailController,
     required this.passwordController,
     required this.onLogin,
   });
+  final TextEditingController emailController;
+  final TextEditingController passwordController;
+  final VoidCallback onLogin;
 
   @override
   LoginFormState createState() => LoginFormState();

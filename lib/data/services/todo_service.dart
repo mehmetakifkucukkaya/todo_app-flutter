@@ -1,6 +1,7 @@
-import 'package:firebase_cloud_firestore/firebase_cloud_firestore.dart';
+// ignore_for_file: public_member_api_docs
 
-import '../models/todo_model.dart';
+import 'package:firebase_cloud_firestore/firebase_cloud_firestore.dart';
+import 'package:todo_app/data/models/todo_model.dart';
 
 class TodoService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -27,7 +28,8 @@ class TodoService {
     try {
       final todoJson = todo.toJson();
       todoJson.remove(
-          'id'); // ID'yi çıkarıyoruz çünkü Firestore otomatik oluşturacakk
+        'id',
+      ); // ID'yi çıkarıyoruz çünkü Firestore otomatik oluşturacakk
       todoJson['createdAt'] = FieldValue.serverTimestamp();
 
       final docRef = await _firestore

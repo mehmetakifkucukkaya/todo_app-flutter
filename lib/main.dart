@@ -1,10 +1,12 @@
+// ignore_for_file: public_member_api_docs
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'bindings/auth_binding.dart';
-import 'config/routes/app_pages.dart';
-import 'controllers/auth_controller.dart';
+import 'package:todo_app/bindings/auth_binding.dart';
+import 'package:todo_app/config/routes/app_pages.dart';
+import 'package:todo_app/controllers/auth_controller.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

@@ -1,9 +1,10 @@
+// ignore_for_file: public_member_api_docs
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
+import 'package:todo_app/config/routes/app_pages.dart';
 import 'package:todo_app/core/constants/app_strings.dart';
-
-import '../config/routes/app_pages.dart';
-import '../data/services/auth_service.dart';
+import 'package:todo_app/data/services/auth_service.dart';
 
 class AuthController extends GetxController {
   final AuthService _authService = AuthService();
@@ -38,9 +39,13 @@ class AuthController extends GetxController {
     }
   }
 
-  Future<void> register(String email, String password, String firstName,
-      String lastName) async {
-    User? user =
+  Future<void> register(
+    String email,
+    String password,
+    String firstName,
+    String lastName,
+  ) async {
+    final user =
         await _authService.register(email, password, firstName, lastName);
     if (user != null) {
       Get.offAllNamed('/login');
@@ -49,7 +54,7 @@ class AuthController extends GetxController {
     }
   }
 
-  void signOut() async {
+  Future<void> signOut() async {
     await _authService.signOut();
     Get.offAllNamed(Routes.LOGIN);
   }

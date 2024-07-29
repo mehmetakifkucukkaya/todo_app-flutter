@@ -1,17 +1,17 @@
+// ignore_for_file: public_member_api_docs
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:todo_app/config/themes/app_theme.dart';
 import 'package:todo_app/controllers/auth_controller.dart';
+import 'package:todo_app/controllers/todo_controller.dart' as tc;
 import 'package:todo_app/core/constants/app_strings.dart';
-
-import '../../controllers/todo_controller.dart' as tc;
-import '../organism/todo/todo_tab.dart' as tt;
+import 'package:todo_app/presentation/organism/todo/todo_tab.dart' as tt;
 
 class HomePage extends StatelessWidget {
+  HomePage({super.key});
   final tc.TodoController controller = Get.put(tc.TodoController());
   final AuthController authController = Get.find<AuthController>();
-
-  HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -26,15 +26,13 @@ class HomePage extends StatelessWidget {
               color: AppTheme.signOutColor,
               size: 32,
             ),
-            onPressed: () {
-              authController.signOut();
-            },
+            onPressed: authController.signOut,
           ),
         ],
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(kToolbarHeight),
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(8),
             child: SearchBar(
               onChanged: (value) {
                 controller.searchQuery.value = value;
@@ -65,10 +63,13 @@ class HomePage extends StatelessWidget {
                 Expanded(
                   child: TabBarView(
                     children: [
-                      Obx(() =>
-                          tt.TodoTab(todos: controller.incompleteTodos)),
-                      Obx(() =>
-                          tt.TodoTab(todos: controller.completedTodos)),
+                      Obx(
+                        () =>
+                            tt.TodoTab(todos: controller.incompleteTodos),
+                      ),
+                      Obx(
+                        () => tt.TodoTab(todos: controller.completedTodos),
+                      ),
                     ],
                   ),
                 ),
@@ -85,8 +86,8 @@ class HomePage extends StatelessWidget {
   }
 
   void _showAddTodoDialog(BuildContext context) {
-    final TextEditingController titleController = TextEditingController();
-    final TextEditingController todoController = TextEditingController();
+    final titleController = TextEditingController();
+    final todoController = TextEditingController();
 
     showDialog(
       context: context,
@@ -132,7 +133,7 @@ class HomePage extends StatelessWidget {
                   print('Failed to add todo: $e');
                   Get.snackbar(
                     AppStrings.error,
-                    "${AppStrings.addErrorDesc} ${e.toString()}",
+                    '${AppStrings.addErrorDesc} $e',
                     backgroundColor: Colors.red,
                     icon: const Icon(Icons.error),
                   );
@@ -140,7 +141,7 @@ class HomePage extends StatelessWidget {
               } else {
                 Get.snackbar(
                   AppStrings.error,
-                  "Başlık ve açıklama boş olamaz",
+                  'Başlık ve açıklama boş olamaz',
                   backgroundColor: Colors.red,
                   icon: const Icon(Icons.error),
                 );

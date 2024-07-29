@@ -12,7 +12,7 @@ TodoModel _$TodoModelFromJson(Map<String, dynamic> json) => TodoModel(
       title: json['title'] as String,
       isCompleted: json['isCompleted'] as bool? ?? false,
       createdAt: _$JsonConverterFromJson<Timestamp, DateTime>(
-          json['createdAt'], const TimestampConverter().fromJson),
+          json['createdAt'], const TimestampConverter().fromJson,),
       todo: json['todo'] as String? ?? '',
     );
 

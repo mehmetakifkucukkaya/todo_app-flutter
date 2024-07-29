@@ -1,11 +1,12 @@
+// ignore_for_file: public_member_api_docs
+
 import 'package:get/get.dart';
+import 'package:todo_app/bindings/auth_binding.dart';
+import 'package:todo_app/bindings/todo_bindings.dart';
 import 'package:todo_app/presentation/views/auth/login_page.dart';
 import 'package:todo_app/presentation/views/auth/register_page.dart';
 import 'package:todo_app/presentation/views/home_page.dart';
-
-import '../../bindings/auth_binding.dart';
-import '../../bindings/todo_bindings.dart';
-import '../../presentation/views/splash_view.dart';
+import 'package:todo_app/presentation/views/splash_view.dart';
 
 part 'app_routes.dart';
 

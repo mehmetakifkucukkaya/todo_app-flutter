@@ -1,9 +1,10 @@
+// ignore_for_file: public_member_api_docs
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import '../../../core/constants/app_strings.dart';
-import '../../../controllers/auth_controller.dart';
-import '../../molecules/auth/register_form.dart';
+import 'package:todo_app/controllers/auth_controller.dart';
+import 'package:todo_app/core/constants/app_strings.dart';
+import 'package:todo_app/presentation/molecules/auth/register_form.dart';
 
 class RegisterPage extends GetView<AuthController> {
   RegisterPage({super.key});
@@ -32,24 +33,24 @@ class RegisterPage extends GetView<AuthController> {
                   BoxConstraints(minHeight: constraints.maxHeight),
               child: IntrinsicHeight(
                 child: Padding(
-                  padding: const EdgeInsets.all(16.0),
+                  padding: const EdgeInsets.all(16),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Image.asset(
-                        "assets/images/icon.png",
+                        'assets/images/icon.png',
                         height: constraints.maxHeight * 0.2,
                         width: constraints.maxWidth * 0.4,
                       ),
                       const SizedBox(height: 18),
                       Card(
                         color: Colors.white,
-                        elevation: 8.0,
+                        elevation: 8,
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0),
+                          borderRadius: BorderRadius.circular(10),
                         ),
                         child: Padding(
-                          padding: const EdgeInsets.all(16.0),
+                          padding: const EdgeInsets.all(16),
                           child: RegisterForm(
                             formKey: _formKey,
                             emailController: emailController,
