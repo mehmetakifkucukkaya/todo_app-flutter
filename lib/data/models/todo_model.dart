@@ -1,11 +1,19 @@
-import 'package:firebase_cloud_firestore/firebase_cloud_firestore.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:json_annotation/json_annotation.dart';
 
+part 'todo_model.g.dart';
+
+@JsonSerializable()
 class TodoModel {
+  @JsonKey(includeIfNull: false)
   String? id;
   String title;
+  @JsonKey(defaultValue: false)
   bool isCompleted;
+  @TimestampConverter()
   DateTime createdAt;
   String userId;
+  @JsonKey(defaultValue: '')
   String todo;
 
   TodoModel({
@@ -17,28 +25,14 @@ class TodoModel {
     this.todo = '',
   }) : createdAt = createdAt ?? DateTime.now();
 
+  factory TodoModel.fromJson(Map<String, dynamic> json) =>
+      _$TodoModelFromJson(json);
+  Map<String, dynamic> toJson() => _$TodoModelToJson(this);
+
   // Firestore'dan veri okumak için factory constructor
   factory TodoModel.fromFirestore(DocumentSnapshot doc) {
-    Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
-    return TodoModel(
-      id: doc.id,
-      title: data['title'] ?? '',
-      isCompleted: data['isCompleted'] ?? false,
-      userId: data['userId'] ?? '',
-      createdAt: (data['createdAt'] as Timestamp).toDate(),
-      todo: data['todo'] ?? '',
-    );
-  }
-
-  // Firestore'a veri yazmak için Map'e dönüştürme metodu
-  Map<String, dynamic> toMap() {
-    return {
-      'title': title,
-      'isCompleted': isCompleted,
-      'userId': userId,
-      'createdAt': Timestamp.fromDate(createdAt),
-      'todo': todo,
-    };
+    final data = doc.data() as Map<String, dynamic>;
+    return TodoModel.fromJson({...data, 'id': doc.id});
   }
 
   // Todo'yu güncellemek için kullanılabilecek bir metod
@@ -59,4 +53,14 @@ class TodoModel {
       todo: todo ?? this.todo,
     );
   }
+}
+
+class TimestampConverter implements JsonConverter<DateTime, Timestamp> {
+  const TimestampConverter();
+
+  @override
+  DateTime fromJson(Timestamp timestamp) => timestamp.toDate();
+
+  @override
+  Timestamp toJson(DateTime date) => Timestamp.fromDate(date);
 }

@@ -7,15 +7,11 @@ class TodoService {
 
   Future<List<TodoModel>> fetchTodos(String userId) async {
     try {
-      // Görevleri createdAt alanına göre sıralı olarak getiriyoruz.
       final querySnapshot = await _firestore
           .collection('users')
           .doc(userId)
           .collection('todos')
-          .orderBy(
-            'createdAt',
-            descending: true,
-          )
+          .orderBy('createdAt', descending: true)
           .get();
 
       return querySnapshot.docs
@@ -29,15 +25,17 @@ class TodoService {
 
   Future<void> addTodo(String userId, TodoModel todo) async {
     try {
-      // createdAt alanını eklerken Timestamp olarak eklediğimizden emin oluyoruz.
+      final todoJson = todo.toJson();
+      todoJson.remove(
+          'id'); // ID'yi çıkarıyoruz çünkü Firestore otomatik oluşturacakk
+      todoJson['createdAt'] = FieldValue.serverTimestamp();
+
       final docRef = await _firestore
           .collection('users')
           .doc(userId)
           .collection('todos')
-          .add({
-        ...todo.toMap(),
-        'createdAt': FieldValue.serverTimestamp(),
-      });
+          .add(todoJson);
+
       todo.id = docRef.id;
     } catch (e) {
       print('Failed to add todo: $e');
@@ -46,12 +44,19 @@ class TodoService {
 
   Future<void> updateTodo(String userId, TodoModel todo) async {
     try {
+      if (todo.id == null) {
+        throw ArgumentError('Todo ID cannot be null');
+      }
+
+      final todoJson = todo.toJson();
+      todoJson.remove('id');
+
       await _firestore
           .collection('users')
           .doc(userId)
           .collection('todos')
           .doc(todo.id)
-          .update(todo.toMap());
+          .update(todoJson);
     } catch (e) {
       print('Failed to update todo: $e');
       rethrow;
